@@ -82,3 +82,12 @@ known-third-party = ["sphinx"]
 [tool.ruff.lint.flake8-tidy-imports]
 # Disallow all relative imports.
 ban-relative-imports = "all"
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "win-64"]
+
+[tool.pixi.pypi-dependencies]
+sphinx-autosummary-accessors = { path = ".", editable = true }
+
+[tool.pixi.tasks]
