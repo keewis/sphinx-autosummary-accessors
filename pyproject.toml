@@ -90,9 +90,6 @@ platforms = ["linux-64", "osx-arm64", "win-64"]
 [tool.pixi.pypi-dependencies]
 sphinx-autosummary-accessors = { path = ".", editable = true }
 
-[tool.pixi.tasks]
-tests = { cmd = "python -m sphinx -b html -d _build/toctrees -EWT -a . _build/html", cwd = "docs" }
-
 [tool.pixi.feature.docs.dependencies]
 sphinx = ">=7"
 sphinx-rtd-theme = "*"
@@ -106,20 +103,27 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 packaging = "*"
 
+[tool.pixi.feature.tests.tasks]
+tests = { cmd = "python -m sphinx -b html -d _build/toctrees -EWT -a . _build/html", cwd = "docs" }
+
 [tool.pixi.feature.ci-py313.dependencies]
 python = "3.13.*"
 
 [tool.pixi.feature.ci-py39.dependencies]
 python = "3.9.*"
 
-[tool.pixi.feature.nightly.pypi-dependencies]
-sphinx = { git = "https://github.com/sphinx-doc/sphinx" }
-
 [tool.pixi.feature.nightly.dependencies]
 python = "3.13.*"
+
+[tool.pixi.feature.nightly.pypi-dependencies]
+sphinx = { git = "https://github.com/sphinx-doc/sphinx.git" }
+sphinx-rtd-theme = "*"
+
+[tool.pixi.feature.nightly.tasks]
+tests = { cmd = "python -m sphinx -b html -d _build/toctrees -EWT -a . _build/html", cwd = "docs" }
 
 [tool.pixi.environments]
 docs = ["docs"]
 ci-py313 = ["tests", "ci-py313"]
 ci-py39 = ["tests", "ci-py39"]
-nightly = ["nightly"]
+nightly = { features = ["nightly"], no-default-feature = true }
